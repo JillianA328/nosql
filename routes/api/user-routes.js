@@ -1,11 +1,4 @@
-// // router.get('/userlist' , function (req , res) {
-//   User.find({}).then(function (users) {
-//   res.send(users);
-//   });
-//  });
-
 const router = require('express').Router();
-
 
 const {
   getAllUsers,
@@ -17,14 +10,10 @@ const {
   deleteFriend
 } = require('../../controllers/user-controller');
 
-// /api/comments/<pizzaId>
-router.route('/:pizzaId').post(addComment);
-
 // /api/user
 router
   .route('/')
-  .put(getAllUsers)
-  .delete(removeUser)
+  // .get(getAllUsers)
   .post(createUser);
 
 // /api/users:id
@@ -34,7 +23,7 @@ router
 .put(updateUser)
 .delete(deleteUser);
 
-// api/users/:id/friends/:friendID
+//api/users/:id/friends/:friendID
 router
 .route('/:id/friends/:friendID')
 .post(addFriend)
