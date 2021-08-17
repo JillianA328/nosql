@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const UserSchema = new Schema(
+
   {
     userName: {
       type: String,
@@ -11,32 +12,34 @@ const UserSchema = new Schema(
       type: String,
       unique: true,
       required: true,
-      match: []
+      match: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
     },
 
-    friends: [
+    thoughts: [
       {
-        type: 'array of values referencing the User model' //fix this
+        type: Schema.Types.ObjectId,
+        ref: 'Thought'
 
       }
-    ]
-  },
+    ],
+  
+    friends: [
   {
-    toJSON: {
-      virtuals: true,
-      getters: true
-    },
-    // prevents virtuals from creating duplicate of _id as `id`
-    id: false
-  }
-);
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+    }
+  ]
+},
+{
+  toJSON: {
+    virtuals: true,
+  },
+  id: false
+});
 
-// get total count of comments and replies on retrieval
-UserSchema.virtual('commentCount').get(function () {
-  return this.comments.reduce(
-    (total, comment) => total + comment.replies.length + 1,
-    0
-  );
+
+UserSchema.virtual('friendCount').get(function () {
+  return this.friends.length;
 });
 
 const User = model('User', UserSchema);

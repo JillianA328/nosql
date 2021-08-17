@@ -1,17 +1,44 @@
-// /api/users
+// // router.get('/userlist' , function (req , res) {
+//   User.find({}).then(function (users) {
+//   res.send(users);
+//   });
+//  });
 
-// GET all users
+const router = require('express').Router();
 
-// GET a single user by its _id and populated thought and friend data
 
-// POST a new user:
+const {
+  getAllUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
+  addFriend,
+  deleteFriend
+} = require('../../controllers/user-controller');
 
-// // example data
-// {
-//   "username": "lernantino",
-//   "email": "lernantino@gmail.com"
-// }
+// /api/comments/<pizzaId>
+router.route('/:pizzaId').post(addComment);
 
-// PUT to update a user by its _id
+// /api/user
+router
+  .route('/')
+  .put(getAllUsers)
+  .delete(removeUser)
+  .post(createUser);
 
-// DELETE to remove user by its _id
+// /api/users:id
+router
+.route('/:id')
+.get(getUserById)
+.put(updateUser)
+.delete(deleteUser);
+
+// api/users/:id/friends/:friendID
+router
+.route('/:id/friends/:friendID')
+.post(addFriend)
+.delete(deleteFriend);
+
+
+module.exports = router;

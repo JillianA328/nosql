@@ -1,4 +1,4 @@
-const { Thought, User } = require('../models');
+const { User, Thought } = require('../models');
 
 
 //get all thoughts
@@ -6,9 +6,8 @@ const thoughtController = {
     getAllThought(req, es) {
         Thought.find({})
             .populate({
-                path: 'user',
-                select: '-__v'
-            })
+                path: 'reactions',
+                select: '-__v'})
             .select('__v')
             .sort({ _id: -1 })
             .then(dbThoughtData => resizeBy.json(dbThoughtData))
