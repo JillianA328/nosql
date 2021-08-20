@@ -1,5 +1,4 @@
-const { Thought, User } = require('../models');
-
+const { User } = require('../models');
 
 //get all users
 const userController = {
@@ -22,6 +21,7 @@ const userController = {
     getUserById({ params }, res) {
         User.findOne({ _id: params.id })
             .populate({ path: 'thoughts', select: '-__v' })
+            .populate({ path: "friends", select: "-_V" })
             .select('-__v')
             .then(dbUserData => res.json(dbUserData))
             .catch(err => {
@@ -55,7 +55,44 @@ const userController = {
     User.findOneAndDelete({ _id: params.id })
       .then(dbUserData => res.json(dbUserData))
       .catch(err => res.json(err));
-  }
+},
+
+addFriend({ params }, res) {
+  User.findOneAndUpdate(
+    { _id: params.id },
+    { $push: { friends: params.friendId } },
+    { new: true }
+  )
+    .populate({ path: "friends", select: "-__v" })
+    .select("-__v")
+    .then((dbUserData) => {
+      if (!dbUserData) {
+        res.status(404).json({ message: "NO FRIEND FOUND" });
+        return;
+      }
+      res.json(dbUserData);
+    })
+    .catch((err) => res.json(err));
+},
+
+// delete to remove a friend from a users friend list
+deleteFriend({ params }, res) {
+  User.findOneAndUpdate(
+    { _id: params.id },
+    { $pull: { friends: params.friendId } },
+    { new: true }
+  )
+    .populate({ path: "friends", select: "-__v" })
+    .select("-__v")
+    .then((dbUserData) => {
+      if (!dbUserData) {
+        res.status(404).json({ message: "NO FRIEND FOUND" });
+        return;
+      }
+      res.json(dbUserData);
+    })
+    .catch((err) => res.status(400).json(err));
+},
 };
 
 module.exports = userController;

@@ -15,6 +15,11 @@ const ReactionSchema = new Schema(
       required: true,
       maxLength: 280,
     },
+    
+    username: {
+      type: String,
+      required: true,
+    },
 
     createdAt: {
       type: Date,
@@ -25,10 +30,8 @@ const ReactionSchema = new Schema(
 
   {
     toJSON: {
-      virtuals: true,
       getters: true,
-    },
-    id: false
+    }
   });
 
   const ThoughtSchema = new Schema(
@@ -65,6 +68,6 @@ return this.reactions.length;
   });
 
 
-  const Thought = model('Thought', ThoughtSchema);
+const Thought = model('Thought', ThoughtSchema);
 
 module.exports = Thought;
