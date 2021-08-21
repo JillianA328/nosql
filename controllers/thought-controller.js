@@ -3,15 +3,15 @@ const { User, Thought } = require('../models');
 
 //get all thoughts
 const thoughtController = {
-    getAllThought(req, es) {
+    getAllThought(req, res) {
         Thought.find({})
-            .populate({
-                path: 'user',
-                select: '-__v'})
-            .select('__v')
-            .sort({ _id: -1 })
+            // .populate({
+            //     path: 'user',
+            //     select: '-__v'})
+            // .select('__v')
+            // .sort({ _id: -1 })
             .then(dbThoughtData => res.json(dbThoughtData))
-            .catch(er => {
+            .catch(err => {
                 console.log(err);
                 res.sendStatus(400);
             });

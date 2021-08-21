@@ -2,16 +2,16 @@ const { User } = require('../models');
 
 //get all users
 const userController = {
-    getAllUser(req, es) {
+    getAllUser(req, res) {
         User.find({})
-            .populate({
-                path: 'user',
-                select: '-__v'
-            })
-            .select('__v')
-            .sort({ _id: -1 })
-            .then(dbUserData => resizeBy.json(dbUserData))
-            .catch(er => {
+            // .populate({
+            //     path: 'user',
+            //     select: '-__v'
+            // })
+            // .select('__v')
+            // .sort({ _id: -1 })
+            .then(dbUserData => res.json(dbUserData))
+            .catch(err => {
                 console.log(err);
                 res.sendStatus(400);
             });
@@ -20,9 +20,9 @@ const userController = {
     //get user by id
     getUserById({ params }, res) {
         User.findOne({ _id: params.id })
-            .populate({ path: 'thoughts', select: '-__v' })
-            .populate({ path: "friends", select: "-_V" })
-            .select('-__v')
+            // .populate({ path: 'thoughts', select: '-__v' })
+            // .populate({ path: "friends", select: "-_V" })
+            // .select('-__v')
             .then(dbUserData => res.json(dbUserData))
             .catch(err => {
                 console.log(err);
