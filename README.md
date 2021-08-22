@@ -6,10 +6,10 @@ This is a social media application using NoSql.  Users can create, delete, updat
   - [Usage](#usage)
   - [Contributers](#contributers)
 
-# App Tutorial: 
+# App Tutorial: https://drive.google.com/file/d/1YC7qZCLRjN_9ybHMGRPo6n25O4-iUrJZ/view
 
 
 # Contributers
 Made by Jillian Amelung. Worked on with MaryKate Smith.
 
-# Find me on GitHub: 
+# Find me on GitHub: https://github.com/JillianA328
